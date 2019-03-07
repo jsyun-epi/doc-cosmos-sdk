@@ -32,6 +32,11 @@ https://github.com/cosmos/cosmos-sdk/tree/develop/docs/translations/kr
 https://github.com/cosmos/cosmos-sdk.git 저장소에서 설치
  branch: stable/0.32.x, tag: v0.32.0 버전 체크아웃
 
+* git로컬 저장소 위치 설정  
+dep를 사용해서 의존성 패키지 관리를 하려면 $GOPATH/src/ 아래에 위치하여야 합니다.
+따라서 cosmos-sdk의 경우 경로는 아래와 같습니다.  
+$GOPATH\src\github.com\cosmos\cosmos-sdk
+
 &nbsp;
 #### 2. gaia 어플리케이션 빌드및 설치
 https://github.com/cosmos/cosmos-sdk/blob/develop/docs/translations/kr/gaia/installation.md
@@ -52,6 +57,32 @@ https://www.jetbrains.com/go/ 페이지에서 Download(Free 30-day trial) 버튼
 GOPATH는 Global GOPATH외에도 따로 지정된 폴더를 만들어서 Project GOPATH 세팅해 줍니다.
 dep를 사용해서 의존성 패키지 관리할 경우는 GOPATH는 Global GOPATH기본 설치시 설정되는것 하나만 유지.
 ~~~
+
+* 의존성 패키지 설치를 위한 dep관련 설정
+~~~
+go get -u github.com/golang/dep/cmd/dep 
+
+명령어로 dep를 설치하고 설치된 실행파일은
+$GOPATH\bin\dep.exe
+에서 파일을 확인.
+
+GoLand에서 프로젝트 dep 관련 설정은 아래 스샷을 참고합니다.(메뉴 File => Setting)
+
+스샷대로 세팅 하였다면 GoLand 터미널 탭을 들어가 project root directory에서
+./vendor 폴더를 생성해 주시고(없을경우) 그다음
+
+dep ensure
+
+명령을 통해 의존성 패키지들을 설치해 주세요.
+설치가 끝나면 ./vendor 폴더 안에 패키지들이 설치되어 있는것을 확인할수 있습니다.
+
+제가 해본 결과 시간이 꽤 걸렸던 과정이라 dep status, dep ensure 프로세스가 진행중이라면 끝날때까지 시간을 두고 기다려야 할 필요가 있었습니다.
+
+cosmos-sdk에는 Gopkg.lock, Gopkg.toml가 이미 생성되어 있기때문에 dep init을 건너 뛰고 dep ensure 로 설치만 하면 됩니다.
+~~~
+
+![dep설정](https://user-images.githubusercontent.com/36718155/53939291-f7cbbb00-40f5-11e9-8544-4d42d03f7ac0.png)
+
 * gaia 어플리케이션(gaiad.exe, gaiacli.exe) 빌드설정
 ~~~
 GoLand의 Run=>Edit Configurations 선택.
@@ -68,8 +99,6 @@ Files를 \project_path(ex:cosmos-sdk)\cmd\gaia\cmd\gaiacli\main.go 로 세팅
 그외는 위와 동일하게 하고 빌드 설정을 마칩니다.(아래 스크린샷 참고)
 
 이후 빌드 선택창에서 빌드할 설정을 선택하고 ▶클릭하면 실행파일이 빌드되어 Output directory에 만들어지게 됩니다.
-
-의존성 패키지들은 Gopkg.lock, Gopkg.toml을 참고하여 dep으로 연동.
 ~~~
 
 ![빌드설정](https://user-images.githubusercontent.com/36718155/53856770-ccbe6a00-4016-11e9-99be-076ffef8e8d8.png)
@@ -147,7 +176,7 @@ gaiad collect-gentxs
 ~~~
 gaiad start
 명령어를 입력하면 가이아 프라이빗 테스트넷이 시작됩니다.
-시작되면 블록들이 5초마다 생성되는데 테스트를 위해 쌓인 데이터들을 리셋하려면 다음괴 같이 입력합니다.(For test develop)
+시작되면 블록들이 5초마다 생성되는데 테스트를 위해 쌓인 데이터들을 리셋하려면 다음과 같이 입력합니다.(For test develop)
 
 gaiad unsafe-reset-all
 테스트넷 리셋 모든 블록데이터 날아감.
