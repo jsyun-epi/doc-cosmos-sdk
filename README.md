@@ -49,8 +49,8 @@ https://www.jetbrains.com/go/ 페이지에서 Download(Free 30-day trial) 버튼
 ~~~
 * GoLand의 File=>Setting 메뉴를 열고 GOROOT, GOPATH세팅.
 ~~~
-GOPATH는 Global GOPATH외에도 따로 지정된 폴더를 만들어서 Project GOPATH 세팅해 줍니다..
-cosmos-sdk 관련 패키지들은 Project GOPATH에 설치.
+GOPATH는 Global GOPATH외에도 따로 지정된 폴더를 만들어서 Project GOPATH 세팅해 줍니다.
+dep를 사용해서 의존성 패키지 관리할 경우는 GOPATH는 Global GOPATH기본 설치시 설정되는것 하나만 유지.
 ~~~
 * gaia 어플리케이션(gaiad.exe, gaiacli.exe) 빌드설정
 ~~~
